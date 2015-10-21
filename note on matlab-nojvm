@@ -1,0 +1,9 @@
+So I was looking in your incredibly helpful code, 
+
+You’re using parfor, which pulls from the matlab parallel computering toolbox, but you are launching your matlab scripts with the –nojvm flag. 
+
+I just found out that the parallel toolbox requires the JVM and if you start matlab without it, it falls back to running in serial. It took me a while to figure it out, but this one change sped up a test script I was running from 90 minutes to 15 minutes. 
+Basically, just leave out the –nojvm. 
+
+Best, 
+-a
