@@ -1,0 +1,14 @@
+Basically 
+(1) set up the yale git account 
+Git.yale.edu ( you need to be on the network or the vpn)
+(2) follow these instructions from github (while you’re on louise), but change the addresses to the yale git ones
+https://help.github.com/articles/generating-ssh-keys/
+
+(3) make git use ssh instead of http to connect (this way you don’t have louise trying to open a popup to authenticate you)
+https://help.github.com/articles/changing-a-remote-s-url/
+
+(4)Use this, or something else that is painless, on your local machine
+https://mac.github.com/
+
+(5) use this to move data
+https://panic.com/transmit/
