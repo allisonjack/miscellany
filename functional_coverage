@@ -1,0 +1,16 @@
+fslchfiletype NIFTI_GZ mean_func_suit.nii mean_fx.nii.gz
+home2/aj349/fsl/bin/bet2 mean_func mask -f 0.3 -n -m; /home2/aj349/fsl/bin/immv mask_mask mask
+source ~/.bashrc; cd /scratch/aj349/BIOPOINT_CRBLM/SCRIPTS/; ./fx_mask.sh -I AC1031 -G ADULT
+
+#fslmerge -t mask *_mask.nii.gz
+#fslmaths mask -mul 33 -Tmean masksum -odt short
+#fslmaths masksum -thr 33 -add masksum masksum
+#fslmaths masksum -mul 0 maskunique
+
+
+#i=1
+#cat AC_IDs_FINAL.txt | while read -r ID || [[ -n "$ID" ]]; do 
+#  echo "fslmaths ${ID}_mask -mul -1 -add 1 -mul $((i++)) -add maskunique maskunique"
+#done
+
+#fslmaths masksum -thr 32 -uthr 32 -bin -mul maskunique maskunique
