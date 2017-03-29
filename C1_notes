@@ -6,6 +6,16 @@ ssh -X nodeXXX
 #interactive matlab
 module load matlab
 source ~/.bashrc
-matlab
+matlab &
+
+cd /lustre/groups/andi/GA_collab/C1_INPUT
+module load fsl/gcc/5.0.7
+
+$ID/anat_brain.nii.gz SUIT/$ID/anat_brain_suit.nii
+cat ASD_IDs.txt | while read ID; do
+  mkdir -p ../SUIT/$ID
+  fslchfiletype NIFTI $ID/anat_brain.nii.gz ../SUIT/$ID/anat_brain_suit.nii
+done
+
 
 #interactive fsl
