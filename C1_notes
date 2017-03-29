@@ -6,16 +6,24 @@ ssh -X nodeXXX
 #interactive matlab
 module load matlab
 source ~/.bashrc
-matlab &
 
 cd /lustre/groups/andi/GA_collab/C1_INPUT
 module load fsl/gcc/5.0.7
 
-$ID/anat_brain.nii.gz SUIT/$ID/anat_brain_suit.nii
+#convert skull-stripped images to .nii
 cat ASD_IDs.txt | while read ID; do
   mkdir -p ../SUIT/$ID
   fslchfiletype NIFTI $ID/anat_brain.nii.gz ../SUIT/$ID/anat_brain_suit.nii
 done
 
+cd ../SUIT
+
+matlab &
+spm fmri
 
 #interactive fsl
+
+
+#job array
+#mapfile only works on bash v. 4
+mapfile -O 1 -t ID < ASD_IDs.txt
