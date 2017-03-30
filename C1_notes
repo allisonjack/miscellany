@@ -21,12 +21,11 @@ cd ../SUIT
 matlab &
 spm fmri
 
-#interactive fsl
 
-
-#job array
+#----JOB ARRAY-----
 #save below as, e.g., prestats.sbatch
 
+#-------------SBATCH FILE: prestats.sbatch---------#
 #!/bin/bash
 
 #SBATCH -J prestats_run1
@@ -46,5 +45,14 @@ mapfile -O 1 -t ID < /lustre/groups/andi/GA_collab/SUIT/ASD_IDs.txt
 
 module load fsl/gcc/5.0.7
 
-#gets elements from the ID array
+#gets elements from the ID array using ${ID[]}
+#values for SLURM_ARRAY_TASK_ID are going to be passed into this script from sbatch call (--array option) at terminal 
 feat /lustre/groups/andi/GA_collab/FSFs/${ID[SLURM_ARRAY_TASK_ID]}/prestats_suit_run1.fsf
+
+#------------END SBATCH FILE---------#
+
+#-----CALL AT TERMINAL-------#
+
+#array call needs to be length of array, i.e. length of text file (wc -l ASD_IDs.txt | awk '{print $1}')
+sbatch --array=1-16 prestats.sbatch
+
