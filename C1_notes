@@ -45,7 +45,7 @@ mapfile -O 1 -t ID < /lustre/groups/andi/GA_collab/SUIT/ASD_IDs.txt
 
 module load fsl/gcc/5.0.7
 
-#gets elements from the ID array using ${ID[]}
+#gets elements from the ID array using ${ID[X]}
 #values for SLURM_ARRAY_TASK_ID are going to be passed into this script from sbatch call (--array option) at terminal 
 feat /lustre/groups/andi/GA_collab/FSFs/${ID[SLURM_ARRAY_TASK_ID]}/prestats_suit_run1.fsf
 
