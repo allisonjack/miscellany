@@ -1,4 +1,4 @@
-salloc -p defq -N1 -t 01:00:00
+salloc -p short -N1 -t 01:00:00
 #check squeue to see which node is allocated
 #then log on to allocated node:
 ssh -X nodeXXX
