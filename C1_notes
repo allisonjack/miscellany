@@ -25,5 +25,26 @@ spm fmri
 
 
 #job array
+#save below as, e.g., prestats.sbatch
+
+#!/bin/bash
+
+#SBATCH -J prestats_run1
+#SBATCH -N1
+#SBATCH -p defq
+#SBATCH -t 02:00:00
+#SBATCH --mail-type=BEGIN,END,FAIL
+#SBATCH --mail-user=allisonjack@gwu.edu
+#SBATCH -o prestats_run1_%A_%a.out
+#SBATCH -e prestats_run1_%A_%a.err
+
+source ~/.bashrc
+
 #mapfile only works on bash v. 4
-mapfile -O 1 -t ID < ASD_IDs.txt
+#read text file lines into array "ID", origin at 1 and trailing newline removed
+mapfile -O 1 -t ID < /lustre/groups/andi/GA_collab/SUIT/ASD_IDs.txt
+
+module load fsl/gcc/5.0.7
+
+#gets elements from the ID array
+feat /lustre/groups/andi/GA_collab/FSFs/${ID[SLURM_ARRAY_TASK_ID]}/prestats_suit_run1.fsf
