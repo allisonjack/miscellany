@@ -1,0 +1,38 @@
+######---loss_mask.sh---#######
+
+#!bin/bash
+
+export FSLDIR="/usr/local/fsl-5.0.8"
+. /usr/local/fsl-5.0.8/etc/fslconf/fsl.sh
+
+cat IDs_n192.txt | while read -r ID || [[ -n "$ID" ]]; do
+/usr/local/fsl-5.0.8/bin/fslmaths ${ID}_mean_fx -binv -mas standard_mask.nii.gz ${ID}_loss; done
+
+#######
+
+#####---merge4D.sh-----######
+
+#!bin/bash
+
+export FSLDIR="/usr/local/fsl-5.0.8"
+. /usr/local/fsl-5.0.8/etc/fslconf/fsl.sh
+
+cat IDs_n192.txt | while read -r ID || [[ -n "$ID" ]]; do
+    printf "${ID}_loss.nii.gz " >> loss_tmp.txt
+  done
+
+LOSSIN=$(cat loss_tmp.txt)
+
+/usr/local/fsl-5.0.8/bin/fslmerge -t full_n192_loss_4D.nii.gz $LOSSIN
+/usr/local/fsl-5.0.8/bin/fslmaths full_n192_loss_4D -roi 0 -1 0 -1 0 -1 0 96 ASD_n96_loss_4D
+/usr/local/fsl-5.0.8/bin/fslmaths full_n192_loss_4D -roi 0 -1 0 -1 0 -1 96 96 TD_n96_loss_4D
+
+rm *tmp*
+
+#####
+
+cat LOSS/IDs_n192.txt | while read ID || [[ -n "$ID" ]]; do cp ${ID}.feat/reg_standard/mask.nii.gz ${ID}.feat/reg_standard/mask_orig.nii.gz; done
+
+cat LOSS/IDs_n192.txt | while read ID || [[ -n "$ID" ]]; do cp LOSS/standard_mask.nii.gz ${ID}.feat/reg_standard/mask.nii.gz; done
+
+cat LOSS/IDs_n192.txt | while read ID || [[ -n "$ID" ]]; do find ${ID}.feat/reg_standard -exec touch -c {} \; ; done
