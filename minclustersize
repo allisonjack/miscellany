@@ -1,0 +1,21 @@
+https://www.jiscmail.ac.uk/cgi-bin/webadmin?A2=ind1509&L=fsl&P=R40168&1=fsl&9=A&J=on&d=No+Match%3BMatch%3BMatches&z=4
+
+Get the minimum significant cluster size using the --minclustersize option of the "cluster" command.  
+Re-run the cluster command using the same options that were used in your Feat run (see report_log.html)
+For example:
+  grep cluster mygrpanalysis.gfeat/cope1.feat/report_log.html
+but ignore any cluster2html commands.
+
+Take the cluster command and remove the output options (e.g. -o, --othresh, --olmax);
+get rid of the part from ">" onwards and add the --minclustersize option (as well as --no_table)  
+For example, turn something like this (details will differ but the general form will be similar):
+
+cluster -i thresh_zstat1 -c stats/cope1 -t 2.3 -p 0.05 -d 0.0552524 --volume=251455 --othresh=thresh_zstat1 -o cluster_mask_zstat1 --connectivity=26 --mm --olmax=lmax_zstat1_std.txt --scalarname=Z > cluster_zstat1_std.txt
+
+into
+
+cluster -i thresh_zstat1 -c stats/cope1 -t 2.3 -p 0.05 -d 0.0552524 --volume=251455 --connectivity=26 --mm --scalarname=Z --minclustersize --no_table
+
+This will then print out a line like this:
+
+Minimum cluster size under p-threshold = 47
